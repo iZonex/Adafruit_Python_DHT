@@ -34,6 +34,6 @@ setup(name              = 'Adafruit_DHT',
       description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
       license           = 'MIT',
       classifiers       = classifiers,
-      url               = 'https://github.com/adafruit/Adafruit_Python_DHT/',
+      url               = 'https://github.com/iZonex/Adafruit_Python_DHT/',
       packages          = find_packages(),
       ext_modules       = extensions)
