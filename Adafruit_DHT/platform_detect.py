@@ -36,26 +36,7 @@ BEAGLEBONE_BLACK = 2
 def platform_detect():
     """Detect if running on the Raspberry Pi or Beaglebone Black and return the
     platform type.  Will return RASPBERRY_PI, BEAGLEBONE_BLACK, or UNKNOWN."""
-    # Handle Raspberry Pi
-    pi = pi_version()
-    if pi is not None:
-        return RASPBERRY_PI
-
-    # Handle Beaglebone Black
-    # TODO: Check the Beaglebone Black /proc/cpuinfo value instead of reading
-    # the platform.
-    plat = platform.platform()
-    if plat.lower().find('armv7l-with-debian') > -1:
-        return BEAGLEBONE_BLACK
-    elif plat.lower().find('armv7l-with-ubuntu') > -1:
-        return BEAGLEBONE_BLACK
-    elif plat.lower().find('armv7l-with-glibc2.4') > -1:
-        return BEAGLEBONE_BLACK
-    elif plat.lower().find('armv7l-with-arch') > -1:
-        return BEAGLEBONE_BLACK
-
-    # Couldn't figure out the platform, just return unknown.
-    return UNKNOWN
+    return RASPBERRY_PI
 
 
 def pi_revision():
@@ -82,28 +63,4 @@ def pi_version():
     None depending on if it's a Raspberry Pi 1 (model A, B, A+, B+),
     Raspberry Pi 2 (model B+), Raspberry Pi 3 or not a Raspberry Pi.
     """
-    # Check /proc/cpuinfo for the Hardware field value.
-    # 2708 is pi 1
-    # 2709 is pi 2
-    # 2835 is pi 3
-    # Anything else is not a pi.
-    with open('/proc/cpuinfo', 'r') as infile:
-        cpuinfo = infile.read()
-    # Match a line like 'Hardware   : BCM2709'
-    match = re.search('^Hardware\s+:\s+(\w+)$', cpuinfo,
-                      flags=re.MULTILINE | re.IGNORECASE)
-    if not match:
-        # Couldn't find the hardware, assume it isn't a pi.
-        return None
-    if match.group(1) == 'BCM2708':
-        # Pi 1
-        return 1
-    elif match.group(1) == 'BCM2709':
-        # Pi 2
-        return 2
-    elif match.group(1) == 'BCM2835':
-        # Pi 3
-        return 3
-    else:
-        # Something else, not a pi.
-        return None
+    return 3
